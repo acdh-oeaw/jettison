@@ -23,11 +23,10 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.Characters;
-import javax.xml.stream.events.Namespace;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
+import javax.xml.stream.events.*;
+
+import static javax.xml.stream.XMLStreamConstants.COMMENT;
+import static javax.xml.stream.XMLStreamConstants.START_DOCUMENT;
 
 /**
  * An XMLEventWriter that delegates to an XMLStreamWriter.
@@ -90,6 +89,8 @@ public class AbstractXMLEventWriter implements XMLEventWriter {
 			streamWriter.writeEndElement();
 		} else if (event.isEndDocument()) {
 			streamWriter.writeEndDocument();
+		} else if (event.getEventType() == COMMENT) {
+			streamWriter.writeComment(((Comment)event).getText());
 		} else {
 			throw new XMLStreamException("Unsupported event type: " + event);
 		}

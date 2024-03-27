@@ -36,6 +36,7 @@ public class BadgerFishXMLStreamWriter extends AbstractXMLStreamWriter {
     private FastStack nodes;
     private String currentKey;
     private NamespaceContext ctx;
+    private boolean isFirstTag;
     
     public BadgerFishXMLStreamWriter(Writer writer) {
         this(writer, new JSONObject());
@@ -184,6 +185,7 @@ public class BadgerFishXMLStreamWriter extends AbstractXMLStreamWriter {
     }
 
     public void writeStartDocument() throws XMLStreamException {
+        isFirstTag = true;
     }
 
     
@@ -201,7 +203,6 @@ public class BadgerFishXMLStreamWriter extends AbstractXMLStreamWriter {
     public void writeStartElement(String prefix, String local, String ns) throws XMLStreamException {
         try {
 
-            // TODO ns
             currentKey = createKey(prefix, ns, local);
             
             Object existing = getCurrentNode().opt(currentKey);
@@ -230,6 +231,14 @@ public class BadgerFishXMLStreamWriter extends AbstractXMLStreamWriter {
                 Node node = new Node(currentNode);
                 getNodes().push(node);
             }
+            if (isFirstTag && !ns.equals("")) {
+                if (prefix.equals("")) {
+                    writeDefaultNamespace(ns);
+                } else {
+                    writeNamespace(prefix, ns);
+                }
+            }
+            isFirstTag = false;
         } catch (JSONException e) {
             throw new XMLStreamException("Could not write start element!", e);
         }

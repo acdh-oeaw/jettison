@@ -79,8 +79,8 @@ public class BadgerFishDOMTest extends DOMTest {
 	}
 
 	public void testElementAttributeNamespace() throws Exception {
-		String xmlStr = "<ns1:kermit xmlns:ns1=\"http://somens\" ns1:mygirl=\"piggy\">the frog</ns1:kermit>";
-		String expStr = "{\"ns1:kermit\":{\"@xmlns\":{\"ns1\":\"http:\\/\\/somens\"},\"@ns1:mygirl\":\"piggy\",\"$\":\"the frog\"}}";
+		String xmlStr = "<ns1:kermit xmlns:ns1=\"http://somens\" ns1:mygirl=\"piggy\" xml:lang=\"en\">the frog</ns1:kermit>";
+		String expStr = "{\"ns1:kermit\":{\"@xmlns\":{\"ns1\":\"http:\\/\\/somens\"},\"@ns1:mygirl\":\"piggy\",\"@xml:lang\":\"en\",\"$\":\"the frog\"}}";
 		String resStr = toJSON(parse(xmlStr));
 		assertEquals("Unexpected result: " + resStr, expStr, resStr);
 

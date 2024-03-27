@@ -15,6 +15,7 @@
  */
 package org.codehaus.jettison.badgerfish;
 
+import javax.xml.XMLConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
@@ -126,9 +127,11 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("bob", reader.getText());
         
         assertEquals(0, reader.getAttributeCount());
-        assertEquals(1, reader.getNamespaceCount());
-        assertEquals("http://some-namespace", reader.getNamespaceURI(0));
-        assertEquals("", reader.getNamespacePrefix(0));
+        assertEquals(2, reader.getNamespaceCount());
+        assertEquals(XMLConstants.XML_NS_URI, reader.getNamespaceURI(0));
+        assertEquals("http://some-namespace", reader.getNamespaceURI(1));
+        assertEquals(XMLConstants.XML_NS_PREFIX, reader.getNamespacePrefix(0));
+        assertEquals("", reader.getNamespacePrefix(1));
         assertEquals("http://some-namespace", reader.getNamespaceURI(""));
         
         assertEquals(XMLStreamReader.END_ELEMENT, reader.next());
@@ -147,7 +150,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("bob", reader.getText());
         
         assertEquals(0, reader.getAttributeCount());
-        assertEquals(2, reader.getNamespaceCount());
+        assertEquals(3, reader.getNamespaceCount());
         
         // namespaces are ordered differently on different platforms/jvms, 
         // so we can't really test the order
@@ -195,7 +198,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("bob", reader.getLocalName());
         
         assertEquals(0, reader.getAttributeCount());
-        assertEquals(2, reader.getNamespaceCount());
+        assertEquals(3, reader.getNamespaceCount());
         
 //        assertEquals("http://some-namespace", reader.getNamespaceURI(0));
 //        assertEquals("", reader.getNamespacePrefix(0));
@@ -219,7 +222,7 @@ public class BadgerFishXMLStreamReaderTest extends TestCase {
         assertEquals("http://some-other-namespace", reader.getNamespaceURI());
         
         assertEquals(0, reader.getAttributeCount());
-        assertEquals(2, reader.getNamespaceCount());
+        assertEquals(3, reader.getNamespaceCount());
         
 //        assertEquals("http://some-namespace", reader.getNamespaceURI(0));
 //        assertEquals("", reader.getNamespacePrefix(0));

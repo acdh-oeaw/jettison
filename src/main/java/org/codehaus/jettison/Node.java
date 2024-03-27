@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLStreamException;
 
@@ -51,6 +52,7 @@ public class Node {
          * that will fail right now, need to investigate that bit more
          */
         this.namespaces = new LinkedHashMap();
+        this.namespaces.put(XMLConstants.XML_NS_PREFIX, XMLConstants.XML_NS_URI);
         this.attributes = new LinkedHashMap();
         
         con.processAttributesAndNamespaces(this, object);
